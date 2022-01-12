@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title> on the way </title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Ana Leite / Marta Marques / Sofia Bento">
+  <meta name="exercise" content="WebDesign_2_Projeto_2">
+
+  <!-- FAV ICON -->
+  <link rel="icon" type="image/png" href="images/favicon.png"/>
+
+  <!--LINK EXTERNAL CSS -->
+  <link rel="stylesheet" href="style.css"> 
+
+</head>
+
+
+<body onload="launch(), displayHome()">
+<!-- ao carregar o website corre a função "launch".
+Inicia-se na home page-->
+
+
+  <!-- MAIN -->
+  <main>
+
+    <!---------- LAUNCH SCREEN ----------->
+    <video id="launch-vid" class="launch" autoplay muted>
+      <source src="videos/on-the-way.mp4" type="video/mp4">
+    </video> 
+    <!---------- FIM LAUNCH SCREEN ----------->
+
+
+    <!---------- HUGE VIEWPORT ALERT ----------->
+    <section id="huge-viewport" class="huge-viewport">
+      <p>Huge viewport! Try to open this on your phone!</p>
+    </section> 
+    <!---------- FIM HUGE VIEWPORT ALERT ----------->
+
+
+    <!---------- LOGIN PAGE ----------->
+    <section id="login">
+      <img id="login_title" src="images/title.png" alt="Title:-On-the-Way"> 
+      <p>Welcome to your new daily journal! Write about your day, get personalized prompts and discover what your journey looks like!</p> 
+     
+      <!-- botões de login -->
+     <section class="login-btn">
+       <!-- "name:firtname" -> acede ao histórico de primeiro nome do usuário -->
+       <input id="user_name" type="text" name="firstname" placeholder="Your name..">
+       <input id="submit_btn" type="submit" onclick="login_screen() , saveName() , playVideo()" value="Get on your way!">
+     </section>
+
+    </section> 
+    <!---------- FIM LOGIN PAGE -----------> 
+  
+
+    <!---------- HOME ----------->
+    <section id="home"> 
+      <!-- vídeos de boas vindas-->
+      <video id="morning" autoplay muted>
+        <source src="videos/good-morning.mp4" type="video/mp4">
+      </video>
+      <video id="afternoon" autoplay muted>
+        <source src="videos/good-afternoon.mp4" type="video/mp4">
+      </video>
+      <video id="evening" autoplay muted>
+        <source src="videos/good-evening.mp4" type="video/mp4">
+      </video>
+      <video id="night" autoplay muted>
+        <source src="videos/good-night.mp4" type="video/mp4">
+      </video>
+
+      <p id="your_name"> </p>
+      <div id="daily-img"></div>
+      <div id="daily-inspo"></div>
+
+      <!-- últimos 2 posts -->
+      <section id="posts-home">
+        <div id="write-post" onclick="displayAddPost()">What are you thinking about?</div>
+        <div id="recent-posts" onclick="displayJourney()"></div>
+      </section>
+      
+    </section> 
+    <!---------- FIM HOME ----------->
+
+
+    <!---------- ADD POST ----------->
+    <section id="add-post"> 
+      
+      <section style="background-color: white;">
+      <!-- botões na barra do topo -->
+      <div class="flex-anav">
+          <!-- Close post -->
+          <div> <p id="close-post" onclick="closeAddPost()">X</p> </div>
+          <!-- Save post -->
+          <div> <p onclick="gotop()" id="save">SAVE</p> </div>
+      </div>
+
+      <div class="add-post-date">
+        <p id="date"></p>
+        <p id="weekday"></p>
+      </div>
+      </section>
+
+      <section id="entry">
+          <!-- input de texto sobre o dia
+          substitui-se "input" por "textarea" para permitir que a caixa de texto se adapte ao tamanho do texto escrito -->
+          <textarea id="today" name="today"  placeholder="How did today go?"></textarea>
+          <!-- daily prompt aleatório, diferente todos os dias -->
+          <div id="prompt-question"></div>
+          <textarea id="prompt" name="prompt" placeholder="|"> </textarea>
+          <!-- lista de favoritos/descobertas do dia -->
+          <p id="fav-question">Today's favourites/discoveries</p>
+          <!-- (TENTATIVA: colocar o texto de input em lista) -->
+          <textarea id="favourites" name="favourites" placeholder="*"></textarea>
+          <!-- Mood do dia -->
+          <p class="choose-mood">Today was...</p>
+
+          <!-- o "multiple" transforma o select sem dropdown; o "size" = tamanho de acordo com o número de opções -->
+          <select id="colors" multiple size='8'>
+            <!-- Butões para cada mood, ao escolher transforma a fonte e a cor de fundo da página inteira para os correspondentes de cada mood -->
+            <option style="font-family: 'FANTASTIC'; font-size: 13vw ; height:8% ;background-color:#66FF88; margin-top: 5vw;" value="#66FF88" id="fantastic" onclick="changeColorFantastic()">FANTASTIC</option>
+
+            <option style="font-family: 'INSPIRING'; font-size: 26vw;  height:11% ;background-color: #DFCCFF;" value="#DFCCFF" id="inspiring" onclick="changeColorInspiring()">INSPIRING</option>
+
+            <option style="font-family: 'FRUSTRATING'; font-size: 29vw; height:12% ; background-color: #FD7B52; padding-top: 2vw;" value="#FD7B52" id="frustrating" onclick="changeColorFrustrating()">FRUSTRATING</option>
+
+            <option style="font-family: 'SAD'; font-size: 47vw; background-color: #8189D1; padding-bottom: 2%;" value="#8189D1" id="sad" onclick="changeColorSad()">SAD</option>
+
+            <option style="font-family: 'GOOD'; font-size: 27vw; height:12% ; background-color: #FCFF66;" value="#FCFF66" id="good" onclick="changeColorGood()">GOOD</option>
+
+            <option style="font-family: 'ORDINARY'; font-size: 18vw; height:11% ; background-color: #B7F2EB;" value="#B7F2EB" id="ordinary" onclick="changeColorOrdinary()">ORDINARY</option>
+
+            <option style="font-family: 'STRESSED'; font-size: 19vw; height:8% ; background-color: #FF461E;" value="#FF461E" id="stressed" onclick="changeColorStressed()">STRESSED</option>
+
+            <option style="font-family: 'ANXIOUS'; font-size: 19vw; height:12% ;background-color: #446CD1;" value="#446CD1" id="anxious" onclick="changeColorAnxious()">ANXIOUS</option>
+
+            <option style="font-family: 'TIRING'; font-size: 13vw; background-color: #E3E3E3;" value="#E3E3E3" id="tiring" onclick="changeColorTiring()">TIRING</option>
+          </select>
+      </section>
+
+    </section> 
+    <!---------- FIM ADD POST ----------->
+
+
+    <!---------- JOURNEY ----------->
+    <section id="journey"> 
+
+      <!-- nav do "filter by" e do "mood map"  -->
+      <section class="flex-jnav">
+        <article class="flex-jnav-1">
+          <p onclick="displayTags()">Filter by <span style="float: right;">&or;</span></p>
+        </article>
+        <article class="flex-jnav-2">
+            <p onclick="displayTreeMap()">Mood Map</p>
+        </article>
+        <!-- abre o alert de confirmação -->
+        <img onclick="openAlert()" id="clear" src="images/clean.png" alt="trash-can-icon">
+      </section>
+
+      <!-- balão que diz que não existem posts na journey e incentiva a adicionar um -->
+      <section class="no-posts-box">
+        <p class="no-posts1">Your journey archive looks empty...</p>
+        <p class="no-posts2">Why not write your first entry now? :)</p>
+        <p class="no-posts3">Click on the plus icon below to add a new post!</p>
+      </section>
+
+      <!-- alert box que aparece quando se clica no icon do lixo -->
+      <section id="clear-alert">
+
+        <section id="alert-content">
+
+          <p class="alert-text">Are you sure you want to delete all your journal entries? This action can't be undone!</p>
+
+          <section class="alert-options">
+            <!-- on click no botão "cancel", fecha o alert -->
+            <article onclick="closeAlert()" class="alert-cancel">
+              <p>CANCEL</p>
+            </article>
+            <!-- on click no botão "i'm sure", faz clear storage e refresca a página do journey -->
+            <article onclick="clearStorage() , refreshJourney()" id="clear-sure" class="alert-ok"><p>I'M SURE</p>
+            </article>
+          </section>
+
+        </section>
+
+      </section>
+
+      <div class="groupofposts">
+        <!-- onde aparecem os posts submetidos -->
+      </div>
+
+    </section> 
+    <!---------- FIM JOURNEY ----------->
+
+
+    <!---------- TREE MAP ----------->
+    <section id="tree-map">  
+
+      <!-- Botões em barra fixa -->
+      <section class="flex-jnav">
+        <article class="flex-jnav-1">
+          <p onclick="displayTags()">Filter by <span style="float: right;">&or;</span></p>
+        </article>
+        <article class="flex-jnav-2">
+          <p onclick="displayJourney()">View as list</p>
+        </article>
+        <!-- clear storage -->
+        <img id="clear" src="images/clean.png" alt="trash-can-icon">
+      </section>
+
+      <!-- imagem correspondente a cada mood
+      (TENTATIVA: consoante quantidade de posts de cada mood selecionado mudava o tamanho da flex da imagem correspondente) -->
+      <div class="mood-flex">
+        <div id="grid-item-1">
+          <img src="images/icon-fantastic.png" alt="fantastic-icon">
+        </div>
+        <div id="grid-item-2">
+          <img src="images/icon-inspiring.png" alt="inspiring-icon">
+        </div>
+        <div id="grid-item-3">
+          <img src="images/icon-frustrating.png" alt="frustrating-icon">
+        </div>
+        <div id="grid-item-4">
+          <img src="images/icon-sad.png" alt="sad-icon">
+        </div>
+        <div id="grid-item-5">
+          <img src="images/icon-good.png" alt="good-icon">
+        </div>
+        <div id="grid-item-6">
+          <img src="images/icon-ordinary.png" alt="ordinary-icon">
+        </div>
+        <div id="grid-item-7">
+          <img src="images/icon-stressed.png" alt="stressed-icon">
+        </div>
+        <div id="grid-item-8">
+          <img src="images/icon-anxious.png" alt="anxious-icon">
+        </div>
+        <div id="grid-item-9">
+          <img src="images/icon-tiring.png" alt="tiring-icon">
+        </div>
+      </div>
+
+    </section>   
+    <!---------- FIM TREE MAP ----------->
+
+
+    <!---------- ABA FILTER BY ----------->
+    <section id="tags"> 
+
+      <!-- Botões em barra fixa -->
+      <section class="flex-jnav">
+        <article class="flex-jnav-1">
+          <p onclick="displayJourney()">Filter by <span style="float: right;">&or;</span></p>
+        </article>
+        <article class="flex-jnav-2">
+            <p onclick="displayJourney()">View as list</p>
+        </article>
+        <!-- clear storage -->
+        <img id="clear" src="images/clean.png" alt="trash-can-icon">
+      </section>
+      
+      <!-- tags de cada mood
+      (TENTATIVA: filtrar posts por mood) -->
+      <section id="tags-container">
+        <div onclick="filterMood()" value="#66FF88" class="fantastic">FANTASTIC</div>
+        <div onclick="filterMood()" value="#DFCCFF" class="inspiring">INSPIRING</div>
+        <div onclick="filterMood()" value="#FD7B52" class="frustrating">FRUSTRATING</div>
+        <div onclick="filterMood()" value="#8189D1" class="sad">SAD</div>
+        <div onclick="filterMood()" value="#FCFF66" class="good">GOOD</div>
+        <div onclick="filterMood()" value="#B7F2EB" class="ordinary">ORDINARY</div>
+        <div onclick="filterMood()" value="#FF461E" class="stressed">STRESSED</div>
+        <div onclick="filterMood()" value="#446CD1" class="anxious">ANXIOUS</div>
+        <div onclick="filterMood()" value="#E3E3E3" class="tiring">TIRING</div>
+      </section>
+      
+    </section> 
+    <!---------- FIM ABA FILTER BY ----------->
+
+    <!---------- ABOUT ----------->
+    <section id="about"> 
+
+      <img id="about_title" src="images/title.png" alt="Title: On the Way">  
+
+      <section class="introduction">
+        <p><strong>On The Way</strong> is about taking the next step to be fully present.
+          By checking in with yourself through a bullet journal-like experience, you can track your daily mood and thoughts. And don't worry if you're not in your best! This app adapts itself to your daily life wherever you go on your journey helping you to take a step back to see the big picture.
+          Feel free to make it yours and keep going by your own way!</p>
+      </section>
+
+      <section class="explanation">
+
+        <article class="secçoes">
+          <h2>MISSION</h2>
+          <p class="mission-goals-p">To be a catalyst of change to dismantle taboos set by society on mental health related matters.</p>
+        </article>
+
+        <article class="secçoes">
+          <h2>GOALS</h2>
+          <p class="mission-goals-p">Encourage a personal reflection through a daily journal entry, helping users navigate on their emotional health journey.</p>
+        </article>
+
+        <article class="secçoes">
+          <h2>COLOPHON</h2>
+          <h3>Designed and coded by</h3>
+          <p>Ana Leite<br>
+            Marta Marques<br>
+            Sofia Bento<br>
+          </p>
+          <p>
+            Oriented by Pedro Amado<br>
+            Academic Project | Web Design 2 | 2022
+          </p> 
+          <h3>Typefaces</h3>
+          <p>
+            <em>Anthony</em>, by Sun Young Oh<br>
+            <em>Harmond</em>, by Dirtylinestudio<br>
+            <em>Helvetica</em>, by Max Miedinger and Eduard Hoffmann<br>
+            <em>Karpaten</em>, by Luis H. J. Rapp<br>
+            <em>Laviossa</em>, by Jehoo Creative<br>
+            <em>Le Murmure</em>, by Jérémy Landes<br>
+            <em>Mister Pixel</em>, by Christophe Badani<br>
+            <em>Pilowlava</em>, by Anton Moglia and Jérémy Landes<br>
+            <em>Poppins</em>, by Indian Type Foundry and Jonny Pinhorn<br>
+            <em>Reinhart Script</em>, by Damelev Studio<br>
+            <em>Typefesse</em>, by Océane Juvin<br>
+            <em>Windius</em>, by Federico Crippa<br>
+          </p>
+        </article>
+      </section>
+    </section> 
+    <!---------- FIM ABOUT ----------->
+
+
+    <!---------- INFO ----------->
+    <section id="info"> 
+      <article>
+        <p class="info-title">APP NAVEGATION</p>
+        <div class="info-instructions">
+          <img src="images/home.jpg" alt="home-icon">
+          <p>HOME <br> welcoming page</p>
+          <img src="images/add-post.jpg" alt="add-post-icon">
+          <p>ADD POST <br> daily thoughts</p>
+          <img src="images/journey.jpg" alt="journey-icon">
+          <p>JOURNEY <br> personal archive </p>
+          <img src="images/about.jpg" alt="about-icon">
+          <p>ABOUT <br> on the way app</p>
+          <img src="images/info.jpg" alt="info-icon">
+          <p>INSTRUCTIONS <br> navegating on the app</p>
+        </div>
+      </article>
+    </section> 
+    <!---------- FIM INFO ----------->
+
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <!---------- NAV ----------->
+    <nav id="nav-content">
+      <div onclick="displayHome()"><img id="img-home" alt="home-icon"></div>
+      <div onclick="displayAddPost()"><img id="img-add" alt="add-post-icon"></div>
+      <div onclick="displayJourney()"><img id="img-journey" alt="journey-icon"></div>
+      <div onclick="displayAbout()"><img id="img-about" alt="about-icon"></div>
+      <div onclick="displayInfo()"><img id="img-info" alt="info-page-icon"></div>
+    </nav>
+    <!---------- FIM NAV ----------->
+</footer>
+
+
+  <!-- JAVA SCRIPT - EXTERNAL-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="main.js"></script>
+
+</body>
+
+</html>
